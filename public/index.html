@@ -1,1 +1,87 @@
-test
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d63384">
+  <meta name="description" content="سامانه مدیریت مشتریان آرایشی بانو">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/style.css">
+  <title>پنل مشتریان بانو</title>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">B</div><div><strong>BANO</strong><small>سامانه مشتریان آرایشی بانو</small></div></div>
+      <button id="logoutBtn" class="btn btn-light hidden">خروج</button>
+    </header>
+
+    <main>
+      <section id="loginView" class="login-card">
+        <div class="eyebrow">BANO CUSTOMER CLUB</div>
+        <h1>ورود به پنل مدیریت</h1>
+        <p class="muted">برای ثبت و مدیریت مشتریان وارد شوید.</p>
+        <form id="loginForm" class="stack">
+          <label>نام کاربری<input name="username" autocomplete="username" required></label>
+          <label>رمز عبور<input name="password" type="password" autocomplete="current-password" required></label>
+          <button class="btn btn-primary" type="submit">ورود به پنل</button>
+          <div id="loginError" class="notice error hidden"></div>
+        </form>
+      </section>
+
+      <section id="appView" class="hidden">
+        <div class="welcome-row"><div><div class="eyebrow">مدیریت ارتباط با مشتری</div><h1>داشبورد بانو</h1><p class="muted">آمار ثبت‌نام و معرفی مشتریان</p></div><div class="date-chip" id="todayLabel"></div></div>
+        <div class="stats">
+          <article class="stat"><span>کل مشتریان</span><strong id="totalCount">۰</strong><small>ثبت‌شده در سیستم</small></article>
+          <article class="stat"><span>مشتریان این هفته</span><strong id="weekCount">۰</strong><small>۷ روز اخیر</small></article>
+          <article class="stat"><span>ثبت‌نام امروز</span><strong id="todayCount">۰</strong><small>تا این لحظه</small></article>
+          <article class="stat"><span>معرفی‌های موفق</span><strong id="referralCount">۰</strong><small>با کد معرف</small></article>
+        </div>
+
+        <nav class="tabs">
+          <button class="tab active" data-tab="register">ثبت مشتری</button>
+          <button class="tab" data-tab="customers">فهرست مشتریان</button>
+          <button class="tab" data-tab="referrals">آمار معرف‌ها</button>
+          <button class="tab" data-tab="weekly">گزارش هفتگی</button>
+        </nav>
+
+        <section id="registerPanel" class="panel">
+          <div class="panel-heading"><div><h2>ثبت مشتری جدید</h2><p class="muted">شماره موبایل باید با کد پیامکی تأیید شود.</p></div><span class="step-pill">۰۱ / ثبت</span></div>
+          <form id="customerForm" class="form-grid">
+            <label>نام و نام خانوادگی<input name="name" maxlength="80" placeholder="مثلاً سارا محمدی" required></label>
+            <label>شماره موبایل<input name="phone" inputmode="tel" placeholder="09123456789" required></label>
+            <label>کد معرف <span class="optional">اختیاری</span><input name="referralCode" inputmode="numeric" maxlength="5" placeholder="شناسه ۵ رقمی معرف"></label>
+            <div class="otp-row">
+              <button id="sendOtpBtn" class="btn btn-outline" type="button">ارسال کد تأیید</button>
+              <input name="otp" inputmode="numeric" maxlength="6" placeholder="کد ۶ رقمی پیامک‌شده">
+            </div>
+            <div class="form-actions"><button class="btn btn-primary" type="submit">تأیید و ثبت مشتری</button><button class="btn btn-light" type="reset">پاک کردن فرم</button></div>
+          </form>
+          <div id="registerMessage" class="notice hidden"></div>
+          <div id="newCustomerCard" class="success-card hidden"></div>
+        </section>
+
+        <section id="customersPanel" class="panel hidden">
+          <div class="panel-heading"><div><h2>همه مشتریان</h2><p class="muted">نام، شماره تماس، شناسه و معرف</p></div><span class="step-pill">فهرست</span></div>
+          <div class="search-row"><input id="customerSearch" placeholder="جست‌وجو با نام، شماره یا شناسه"><button id="searchBtn" class="btn btn-outline">جست‌وجو</button></div>
+          <div class="table-wrap"><table><thead><tr><th>شناسه</th><th>نام</th><th>شماره تماس</th><th>معرف</th><th>تعداد معرفی</th><th>تاریخ ثبت</th></tr></thead><tbody id="customersBody"></tbody></table></div>
+          <p class="muted tiny">برای حفظ سرعت، حداکثر ۵۰۰ نتیجه آخر نمایش داده می‌شود. جست‌وجو را برای پیدا کردن سایر افراد به‌کار ببرید.</p>
+        </section>
+
+        <section id="referralsPanel" class="panel hidden">
+          <div class="panel-heading"><div><h2>عملکرد معرف‌ها</h2><p class="muted">چه کسی چند مشتری جدید به بانو معرفی کرده؟</p></div><span class="step-pill">معرفی</span></div>
+          <div class="table-wrap"><table><thead><tr><th>شناسه معرف</th><th>نام مشتری</th><th>شماره تماس</th><th>مشتری معرفی‌شده</th></tr></thead><tbody id="referralsBody"></tbody></table></div>
+        </section>
+
+        <section id="weeklyPanel" class="panel hidden">
+          <div class="panel-heading"><div><h2>گزارش ثبت‌نام هفتگی</h2><p class="muted">تعداد مشتریان ثبت‌شده در ۷ روز اخیر</p></div><span class="step-pill">گزارش</span></div>
+          <div id="weeklyBars" class="weekly-bars"></div>
+        </section>
+      </section>
+    </main>
+    <footer>آرایشی بانو <span>•</span> مدیریت هوشمند مشتریان</footer>
+  </div>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

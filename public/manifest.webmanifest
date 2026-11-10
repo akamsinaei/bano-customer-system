@@ -1,0 +1,11 @@
+{
+  "name": "سامانه مشتریان آرایشی بانو",
+  "short_name": "بانو",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf7fa",
+  "theme_color": "#d63384",
+  "icons": []
+}
